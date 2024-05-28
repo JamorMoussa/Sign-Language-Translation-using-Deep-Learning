@@ -21,10 +21,11 @@ class AslGCNDataset(InMemoryDataset):
             pre_filter=None
         ) -> None:
         
-        if not (osp.exists(root) and osp.exists(osp.join(root, "raw"))):
+        if not (osp.exists(root) and not osp.exists(osp.join(root, "dataset" "raw"))):
             raise DatasetNotExist()
         
         super().__init__(root, transform, pre_transform, pre_filter, force_reload=re_process)
+        
         self.load(self.processed_paths[0])
 
     @property
