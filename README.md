@@ -20,3 +20,11 @@ pip install -e .
 ```
 
 **Note:** before install the `asl` lib, make sure that the `env` has been activated.
+
+## Data Processing
+
+For data processing you need to run the `process_data.py` script, with different arguments.
+
+```bash
+python3 process_data.py  --which=gcn --max_sample=100 --replace=true
+```
