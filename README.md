@@ -2,7 +2,7 @@
 
 **Motivation:** How Can we use AI technologie to help Deaf People?
 
-This projects aims to build a Sign Language Translator system, which able to map each sign into english lettre. In this projects we're going to test vaious Deep Learning architectures including **Multi-layer Perceptron (MLP)**, **Convolution Neural Networks (CNN)** and **Graph Convolution Networks (GCN)**  
+This project aims to build a Sign Language Translator system, which able to map each sign into english lettre. So, we're going to test vaious Deep Learning architectures including **Multi-layer Perceptron (MLP)**, **Convolution Neural Networks (CNN)** and **Graph Convolution Networks (GCN)**  
 
 
 ## Project setup
