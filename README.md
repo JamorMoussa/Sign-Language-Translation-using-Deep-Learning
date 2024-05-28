@@ -19,4 +19,4 @@ Next, install the `asl` library, which contains datasets for various architectur
 pip install -e .
 ```
 
-**Note:** before install the `asl` lib, make sure that the `env` is has been activated.
+**Note:** before install the `asl` lib, make sure that the `env` has been activated.
