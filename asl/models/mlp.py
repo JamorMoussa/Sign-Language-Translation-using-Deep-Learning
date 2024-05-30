@@ -38,10 +38,3 @@ class MLPModel(nn.Module):
         x = self.mlp(x)
         x = self.output_layer(x)
         return x
-
-# Example usage
-mlp_configs = MLPConfigs()
-print(mlp_configs.hidden_size)  # This will print the default hidden_size which is 64
-
-mlp_model = MLPModel(mlp_configs)
-print(mlp_model)
