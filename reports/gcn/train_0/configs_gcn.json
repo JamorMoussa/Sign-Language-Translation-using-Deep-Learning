@@ -1,0 +1,33 @@
+{
+    "gcn": {
+        "gcn_layers": [
+            [
+                2,
+                64
+            ],
+            [
+                64,
+                32
+            ]
+        ],
+        "fc_layers": [
+            [
+                32,
+                32
+            ],
+            [
+                32,
+                28
+            ]
+        ],
+        "device": "cpu"
+    },
+    "loader": {
+        "train_batch": 500,
+        "test_batch": 100
+    },
+    "opt": {
+        "lr": 0.01
+    },
+    "epochs": 5
+}
