@@ -5,17 +5,6 @@ import json
 import os
 
 
-# SAVE_PATH = osp.join(DATASET_PATH, "raw")
-
-# if not osp.exists(DATASET_PATH):
-#     os.mkdir(DATASET_PATH)
-
-# if not osp.exists(SAVE_PATH):
-#     os.mkdir(SAVE_PATH)
-
-# BASE_PATH = osp.join(BASE_PATH, "data")
-
-
 class AslGCNDatasetProcessor:
 
     def __init__(
@@ -70,7 +59,6 @@ class AslGCNDatasetProcessor:
         json.dump(data, open(f"{osp.join(self.save_path, 'raw', char)}.json", "w"))
 
         print(f"{label} -> done with char: {char}", "."*10)
-    
 
 
     def extract_for_all_char(self, ) -> None:
@@ -79,6 +67,7 @@ class AslGCNDatasetProcessor:
 
         for label, char in enumerate(chars):
             self.extract_featrs_from_one_sample(char, label)
+
 
     def process(self, re_process: bool = False):
         
