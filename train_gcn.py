@@ -5,7 +5,7 @@ from torch.utils.data import random_split
 from torch_geometric.loader import DataLoader
 
 from asl import models, datasets
-from asl.train.gcn import train_gcn_model
+from asl.train.gcn import train_gcn_model, generate_report_for_gcn_model, get_general_configs
 
 import os.path as osp
 import argparse
@@ -15,7 +15,6 @@ import os
 
 
 if __name__ == "__main__":
-
 
     parser = argparse.ArgumentParser(description= "Train GCN model for ASL.")
 
@@ -63,7 +62,18 @@ if __name__ == "__main__":
         epochs= args.epochs
     )
 
-    length = len(os.listdir(osp.join(args.root, "reports")))
+    configs = get_general_configs(
+        gcn_configs= gcn_configs.to_dict(),
+        batches = (args.train_batch,args.test_batch),
+        lr= args.lr,
+        epochs= args.epochs
+    )
 
-    with open(osp.join(args.root, f"reports/train_gcn{length}.json"), "w") as f:
-        json.dump(results, f)
+    generate_report_for_gcn_model(
+        root= args.root,
+        model= model, 
+        results= results,
+        configs= configs,
+    )
+
+

@@ -16,6 +16,9 @@ class GCNModelConfigs:
     @staticmethod
     def get_defaults():
         return GCNModelConfigs()
+    
+    def to_dict(self):
+        return {"gcn_layers": self.gcn_layers, "fc_layers": self.fc_layers, "device": str(self.device)}
 
 class GCNModel(nn.Module):
 
