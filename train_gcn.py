@@ -32,11 +32,14 @@ if __name__ == "__main__":
 
     parser.add_argument('--epochs', type= int, default= 1,
                         help="")
+    
+    parser.add_argument('--dataset', type= str, default= "data/gcn/dataset",
+                        help="")
 
     args = parser.parse_args()
 
     dataset = datasets.AslGCNDataset(
-        root= osp.join(args.root, "data/gcn/dataset")
+        root= osp.join(args.root, args.dataset)
     )
 
     trainset, testset = random_split(dataset,  lengths=[0.87, 0.13])
