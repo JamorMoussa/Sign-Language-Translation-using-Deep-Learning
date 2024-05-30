@@ -7,10 +7,11 @@ from typing import List, Tuple
 
 @dataclass
 class GCNModelConfigs:
-    input_dim: int = 2
-    num_classes: int = 28
+   
     gcn_layers: List[Tuple[int, int]] = field(default_factory=lambda: [(2, 64), (64, 32)])
     fc_layers: List[Tuple[int, int]] = field(default_factory=lambda: [(32, 32), (32, 28)])
+
+    device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     @staticmethod
     def get_defaults():
@@ -19,7 +20,8 @@ class GCNModelConfigs:
 class GCNModel(nn.Module):
 
     def __init__(self, configs: GCNModelConfigs = GCNModelConfigs.get_defaults()) -> None:
-        super().__init__()  # Ensure proper initialization
+        super(GCNModel, self).__init__() 
+        
         self.configs: GCNModelConfigs = configs
 
         self.gcn = gnn.Sequential('x, edge_index', [
