@@ -26,5 +26,5 @@ pip install -e .
 For data processing you need to run the `process_data.py` script, with different arguments.
 
 ```bash
-python3 process_data.py  --which=gcn --max_sample=100 --replace=true
+python3 process_data.py --which=gcn --max_sample=100 --replace=true
 ```
