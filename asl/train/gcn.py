@@ -112,6 +112,8 @@ def train_gcn_model(
         results["test_loss"].append(test_loss)
         results["test_acc"].append(test_acc)
 
+        bar.set_description(f"Train Loss: {train_loss:.4f} | Test Loss: {test_loss:.4f} | Train Acc:{train_acc:.3f} | Test Acc: {test_acc:.3f} |")
+
     return results
 
 
