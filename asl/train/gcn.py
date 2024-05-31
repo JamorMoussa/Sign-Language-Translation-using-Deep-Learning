@@ -60,7 +60,7 @@ def compute_loss_accuracy(
 
         total_loss += loss.item()
 
-    total_loss /= len(loader.dataset)
+    # total_loss /= len(loader.dataset)
     accuracy /= len(loader.dataset)
 
     return total_loss, accuracy

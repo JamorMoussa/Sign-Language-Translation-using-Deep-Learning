@@ -1,0 +1,19 @@
+GCNModel(
+  (gcn): Sequential(
+    (0) - Sequential(
+    (0) - GCNConv(2, 64): x, edge_index -> x
+    (1) - ReLU(inplace=True): x -> x
+  ): x, edge_index -> x
+    (1) - Sequential(
+    (0) - GCNConv(64, 32): x, edge_index -> x
+    (1) - ReLU(inplace=True): x -> x
+  ): x, edge_index -> x
+  )
+  (fc): Sequential(
+    (0): Sequential(
+      (0): Linear(in_features=32, out_features=32, bias=True)
+      (1): ReLU(inplace=True)
+    )
+    (out): Linear(in_features=32, out_features=28, bias=True)
+  )
+)
