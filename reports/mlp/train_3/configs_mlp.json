@@ -1,0 +1,1 @@
+{"mlp": {"MLP_layers": [[42, 28], [28, 28]], "device": "cpu", "num_classes": 28}, "loader": {"train_batch": 64, "test_batch": 10}, "opt": {"lr": 0.01}, "epochs": 10}
