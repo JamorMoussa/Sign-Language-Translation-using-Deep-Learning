@@ -18,7 +18,6 @@ def train_step_gcn_model(
     opt: optim.Optimizer,
     loader: DataLoader, 
     device: torch.device,
-    lr_schedular: optim.lr_scheduler.LRScheduler = None,
 ) -> None: 
 
     for data in loader:
@@ -32,10 +31,7 @@ def train_step_gcn_model(
 
         loss.backward()
 
-        if lr_schedular is None:
-            opt.step()
-        else:
-            lr_schedular.step()
+        opt.step()
 
 
 
@@ -117,6 +113,8 @@ def train_gcn_model(
         results["train_acc"].append(train_acc)
         results["test_loss"].append(test_loss)
         results["test_acc"].append(test_acc)
+
+        lr_schedular.step()
 
         lr = opt.param_groups[0]['lr']
 
