@@ -17,7 +17,8 @@ def train_step_gcn_model(
     loss_fn: nn.modules.loss._Loss,
     opt: optim.Optimizer,
     loader: DataLoader, 
-    device: torch.device
+    device: torch.device,
+    lr_schedular: optim.lr_scheduler.LRScheduler = None,
 ) -> None: 
 
     for data in loader:
@@ -31,7 +32,10 @@ def train_step_gcn_model(
 
         loss.backward()
 
-        opt.step()
+        if lr_schedular is not None:
+            opt.step()
+        else:
+            lr_schedular.step()
 
 
 
@@ -70,6 +74,7 @@ def train_gcn_model(
     model: nn.Module,
     loss_fn: nn.modules.loss._Loss,
     opt: optim.Optimizer,
+    lr_schedular: optim.lr_scheduler.LRScheduler,
     train_loader: DataLoader, 
     test_loader: DataLoader, 
     device: torch.device,
@@ -89,6 +94,7 @@ def train_gcn_model(
             model= model,
             loss_fn= loss_fn,
             opt= opt,
+            lr_schedular= lr_schedular,
             loader= train_loader,
             device= device
         )
@@ -121,7 +127,7 @@ def generate_report_for_gcn_model(
     root: str,
     model: nn.Module,
     results: dict[str, list],
-    configs: dict[str, Any] 
+    configs: dict[str, Any],
 ):
     
     reports_path = osp.join(root, "reports", "gcn")
@@ -161,6 +167,8 @@ def generate_report_for_gcn_model(
 def get_general_configs(
     gcn_configs: dict,
     batches: tuple[int, int],
+    opt_name: str,
+    lr_schedular: optim.lr_scheduler.LRScheduler,
     lr: float,
     epochs: int
 
@@ -172,7 +180,13 @@ def get_general_configs(
             "test_batch": batches[1],
         },
         "opt": {
-            "lr": lr
+            "name": opt_name,
+            "lr": lr,
+            "lr_schedular": {
+                "name": lr_schedular.__class__.__name__,
+                "gamma": lr_schedular.gamma,
+                "step size": lr_schedular.step_size,
+            },
         },
         "epochs": epochs
     }

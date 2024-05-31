@@ -36,6 +36,12 @@ if __name__ == "__main__":
     parser.add_argument('--dataset', type= str, default= "data/gcn/dataset",
                         help="")
 
+    parser.add_argument('--stepsize', type= int, default= 1000,
+                        help="")
+
+    parser.add_argument('--gamma', type= float, default= 0.1,
+                        help="")
+
     args = parser.parse_args()
 
     dataset = datasets.AslGCNDataset(
@@ -58,10 +64,15 @@ if __name__ == "__main__":
 
     opt = optim.Adam(model.parameters(), lr= args.lr)
 
+    lr_schedular = optim.lr_scheduler.StepLR(optimizer= opt,
+                                             step_size= args.stepsize, 
+                                             gamma= args.gamma)
+
     results = train_gcn_model(
         model= model,
         loss_fn= loss_fn,
         opt= opt,
+        lr_schedular= lr_schedular,
         train_loader= train_loader,
         test_loader= test_loader,
         device= gcn_configs.device,
@@ -71,6 +82,8 @@ if __name__ == "__main__":
     configs = get_general_configs(
         gcn_configs= gcn_configs.to_dict(),
         batches = (args.train_batch,args.test_batch),
+        opt_name= opt.__class__.__name__,
+        lr_schedular = lr_schedular,
         lr= args.lr,
         epochs= args.epochs
     )

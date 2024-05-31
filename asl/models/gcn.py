@@ -20,7 +20,8 @@ class GCNModelConfigs:
         return GCNModelConfigs()
     
     def to_dict(self):
-        return {"gcn_layers": self.gcn_layers, "fc_layers": self.fc_layers, "device": str(self.device), "num_classes": self.num_classes}
+        fc_layers = [*self.fc_layers, (self.fc_layers[-1][1], self.num_classes)]
+        return {"gcn_layers": self.gcn_layers, "fc_layers": fc_layers, "device": str(self.device), "num_classes": self.num_classes}
 
 class GCNModel(nn.Module):
 
