@@ -49,6 +49,9 @@ if __name__ == "__main__":
 
     gcn_configs = models.GCNModelConfigs.get_defaults()
 
+    gcn_configs.gcn_layers = [(2, 64), (64, 64)]
+    gcn_configs.fc_layers = [(64, 32), (32, 32)]
+
     model = models.GCNModel(configs= gcn_configs).to(gcn_configs.device)
 
     loss_fn = nn.CrossEntropyLoss()

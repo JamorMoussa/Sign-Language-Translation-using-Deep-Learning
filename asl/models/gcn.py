@@ -9,16 +9,18 @@ from typing import List, Tuple
 class GCNModelConfigs:
    
     gcn_layers: List[Tuple[int, int]] = field(default_factory=lambda: [(2, 64), (64, 32)])
-    fc_layers: List[Tuple[int, int]] = field(default_factory=lambda: [(32, 32), (32, 28)])
+    fc_layers: List[Tuple[int, int]] = field(default_factory=lambda: [(32, 32)])
 
     device: torch.device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+    num_classes: int = 28
 
     @staticmethod
     def get_defaults():
         return GCNModelConfigs()
     
     def to_dict(self):
-        return {"gcn_layers": self.gcn_layers, "fc_layers": self.fc_layers, "device": str(self.device)}
+        return {"gcn_layers": self.gcn_layers, "fc_layers": self.fc_layers, "device": str(self.device), "num_classes": self.num_classes}
 
 class GCNModel(nn.Module):
 
@@ -36,13 +38,17 @@ class GCNModel(nn.Module):
             *[self.fc_block(in_dim, out_dim) for (in_dim, out_dim) in self.configs.fc_layers]
         )
 
+        last_dim = self.configs.fc_layers[-1][1]
+
+        self.fc.add_module(name= "out", module=nn.Linear(last_dim , self.configs.num_classes))
+
     def gcn_conv_block(self, in_dim: int, out_dim: int):
         return gnn.Sequential('x, edge_index', [
             (gnn.GCNConv(in_dim, out_dim), 'x, edge_index -> x'),
             nn.ReLU(True),
         ])
 
-    def fc_block(self, in_dim: int, out_dim: int):
+    def fc_block(self, in_dim: int, out_dim: int,):
         return nn.Sequential(
             nn.Linear(in_dim, out_dim),
             nn.ReLU(True),
