@@ -90,7 +90,6 @@ def train_gcn_model(
             model= model,
             loss_fn= loss_fn,
             opt= opt,
-            lr_schedular= lr_schedular,
             loader= train_loader,
             device= device
         )
