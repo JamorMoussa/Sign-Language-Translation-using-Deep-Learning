@@ -32,7 +32,7 @@ def train_step_gcn_model(
 
         loss.backward()
 
-        if lr_schedular is not None:
+        if lr_schedular is None:
             opt.step()
         else:
             lr_schedular.step()
