@@ -44,8 +44,8 @@ if __name__ == "__main__":
 
     trainset, testset = random_split(dataset,  lengths=[0.87, 0.13])
 
-    train_loader = DataLoader(trainset, batch_size=500, shuffle=True)
-    test_loader = DataLoader(testset, batch_size=100, shuffle=False)
+    train_loader = DataLoader(trainset, batch_size= args.train_batch, shuffle=True)
+    test_loader = DataLoader(testset, batch_size= args.test_batch, shuffle=True)
 
     gcn_configs = models.GCNModelConfigs.get_defaults()
 
