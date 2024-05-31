@@ -28,7 +28,7 @@ class AslMLPDataset(Dataset):
             y.append(data.y)
         
         data = torch.stack(X, dim=0)
-        label = torch.stack(y, dim=0).t().squeeze(0)
+        label = torch.stack(y, dim=0)
         return data, label
     
     def save_processed_data(self, data, label):
