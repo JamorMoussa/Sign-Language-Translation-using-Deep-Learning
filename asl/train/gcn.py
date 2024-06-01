@@ -117,7 +117,7 @@ def train_gcn_model(
 
         lr = opt.param_groups[0]['lr']
 
-        bar.set_description(f"Train Loss: {train_loss:.4f} | Test Loss: {test_loss:.4f} | Train Acc:{train_acc:.3f} | Test Acc: {test_acc:.3f} | lr: {lr:.5f}")
+        bar.set_description(f"Epoch {epoch}/{epochs} | Train Loss: {train_loss:.4f} | Test Loss: {test_loss:.4f} | Train Acc:{train_acc:.3f} | Test Acc: {test_acc:.3f} | lr: {lr:.5f}")
 
     return results
 
