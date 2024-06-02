@@ -52,7 +52,7 @@ def compute_loss_accuracy(
     test_correct = 0
     test_samples = 0
     
-    for (img, lbl) in tqdm(enumerate(loader), total=len(loader)):
+    for i,(img, lbl) in tqdm(enumerate(loader), total=len(loader)):
         img, lbl = img.to(device), lbl.to(device)
 
         pred_lbl = model(img)
