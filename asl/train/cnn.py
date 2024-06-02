@@ -21,22 +21,24 @@ def train_step_cnn_model(
     lr_schedular: optim.lr_scheduler.LRScheduler = None,
 ) -> None: 
 
-    for i, (img, lbl) in tqdm(enumerate(loader), total=len(loader)):
-            img, lbl = img.to(device), lbl.to(device)
+    for i, (img, lbl) in enumerate(loader):
+            
+        img, lbl = img.to(device), lbl.to(device)
 
-            opt.zero_grad()
-            pred_lbl = model(img)
-            loss = loss_fn(pred_lbl, lbl)
-            loss.backward()
+        opt.zero_grad()
+
+        pred_lbl = model(img)
+        
+        loss = loss_fn(pred_lbl, lbl)
+        
+        loss.backward()
+        
+        opt.step()
+        
+        if lr_schedular is not None:
             opt.step()
-            # predicted = pred_lbl.argmax(dim=1)
-            # total_train_correct += (predicted == lbl).sum().item()
-            # total_train_samples += lbl.size(0)
-
-            if lr_schedular is not None:
-              opt.step()
-            else:
-              lr_schedular.step()
+        else:
+            lr_schedular.step()
 
 
 
@@ -48,26 +50,30 @@ def compute_loss_accuracy(
 ) -> float:
     
     model.eval()
+
     total_loss = 0
-    test_correct = 0
-    test_samples = 0
     
-    for i,(img, lbl) in tqdm(enumerate(loader), total=len(loader)):
+    accuracy = 0
+    
+    for i,(img, lbl) in enumerate(loader):
+        
         img, lbl = img.to(device), lbl.to(device)
 
         pred_lbl = model(img)
+
         loss = loss_fn(pred_lbl, lbl)
     
+        pred = pred_lbl.argmax(dim=1)
+
+        accuracy += int((pred == lbl).sum())
 
         total_loss += loss.item()
-        test_predicted = pred_lbl.argmax(dim=1)
-        test_correct += (test_predicted == lbl).sum().item()
-        test_samples += lbl.size(0)
         
-    avg_test_loss = loss  / len(loader)
-    test_accuracy = test_correct / test_samples * 100
+    # total_loss = total_loss  / len(loader.)
 
-    return avg_test_loss, test_accuracy
+    accuracy = accuracy / len(loader.dataset)
+
+    return total_loss, accuracy
 
 
 def train_cnn_model(
@@ -120,7 +126,7 @@ def train_cnn_model(
 
         lr = opt.param_groups[0]['lr']
 
-        bar.set_description(f"Train Loss: {train_loss:.4f} | Test Loss: {test_loss:.4f} | Train Acc:{train_acc:.3f} | Test Acc: {test_acc:.3f} | lr: {lr:.5f}")
+        bar.set_description(f"Epoch {epoch}/{epochs} | Train Loss: {train_loss:.4f} | Test Loss: {test_loss:.4f} | Train Acc:{train_acc:.3f} | Test Acc: {test_acc:.3f} | lr: {lr:.5f}")
 
     return results
 

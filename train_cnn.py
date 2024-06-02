@@ -19,9 +19,10 @@ if __name__ == "__main__":
 
     parser = argparse.ArgumentParser(description= "Train cnn model for ASL.")
 
-    parser.add_argument('--root1', type= str, default="asl_data/asl_dataset",
-                        help="")
     parser.add_argument('--root', type= str, default="./",
+                        help="")
+    
+    parser.add_argument('--dataset', type= str, default="./asl_data/asl_dataset",
                         help="")
     
     parser.add_argument('--train_batch', type= int, default= 100,
@@ -55,7 +56,7 @@ if __name__ == "__main__":
     ])
     
     dataset = datasets.ASLCNNDataset(
-        args.root1  ,transform= transform
+        args.dataset  ,transform= transform
     )
 
     trainset, testset = random_split(dataset,  lengths=[0.87, 0.13])

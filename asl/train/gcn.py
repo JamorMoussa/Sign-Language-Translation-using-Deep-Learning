@@ -56,6 +56,7 @@ def compute_loss_accuracy(
         loss = loss_fn(out, data.y)
 
         pred = out.argmax(dim=1)
+        
         accuracy += int((pred == data.y).sum())
 
         total_loss += loss.item()

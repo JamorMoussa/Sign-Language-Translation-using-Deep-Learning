@@ -1,4 +1,7 @@
-import torch.optim as optim
 
 
-print(optim.Adam.__name__)
+x =[1, 2]
+x2 = [32, 12]
+y = [*x, *x2 , 4]
+
+print(y)
