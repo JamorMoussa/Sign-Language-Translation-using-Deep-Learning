@@ -132,7 +132,7 @@ def generate_report_for_cnn_model(
     configs: dict[str, Any],
 ):
     
-    reports_path = osp.join(root)
+    reports_path = osp.join(root ,"reports","cnn")
 
     if not osp.exists(reports_path): os.mkdir(reports_path)
 
