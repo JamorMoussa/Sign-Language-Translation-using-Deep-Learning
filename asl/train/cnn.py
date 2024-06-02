@@ -29,6 +29,9 @@ def train_step_cnn_model(
             loss = loss_fn(pred_lbl, lbl)
             loss.backward()
             opt.step()
+            # predicted = pred_lbl.argmax(dim=1)
+            # total_train_correct += (predicted == lbl).sum().item()
+            # total_train_samples += lbl.size(0)
 
             if lr_schedular is not None:
               opt.step()
@@ -46,25 +49,25 @@ def compute_loss_accuracy(
     
     model.eval()
 
-    total_loss = 0
-    accuracy = 0
+    test_correct = 0
+    test_samples = 0
     
     for i, (img, lbl) in tqdm(enumerate(loader), total=len(loader)):
         img, lbl = img.to(device), lbl.to(device)
 
         pred_lbl = model(img)
         loss = loss_fn(pred_lbl, lbl)
-        
-
-        pred =  pred_lbl.argmax(dim=1)
-        accuracy += int((pred == lbl).sum())
+    
 
         total_loss += loss.item()
+        test_predicted = pred_lbl.argmax(dim=1)
+        test_correct += (test_predicted == lbl).sum().item()
+        test_samples += lbl.size(0)
+        
+    avg_test_loss = loss  / len(loader)
+    test_accuracy = test_correct / test_samples * 100
 
-    total_loss =total_loss/ len(loader.dataset)
-    accuracy = accuracy/ len(loader.dataset)*100
-
-    return total_loss, accuracy
+    return avg_test_loss, test_accuracy
 
 
 def train_cnn_model(
