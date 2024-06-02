@@ -48,11 +48,11 @@ def compute_loss_accuracy(
 ) -> float:
     
     model.eval()
-
+    total_loss = 0
     test_correct = 0
     test_samples = 0
     
-    for i, (img, lbl) in tqdm(enumerate(loader), total=len(loader)):
+    for (img, lbl) in tqdm(enumerate(loader), total=len(loader)):
         img, lbl = img.to(device), lbl.to(device)
 
         pred_lbl = model(img)
