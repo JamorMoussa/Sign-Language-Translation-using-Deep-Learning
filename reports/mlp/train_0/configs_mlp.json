@@ -1,0 +1,1 @@
+{"mlp": {"gcn_layers": [[2, 64], [64, 32]], "fc_layers": [[32, 32]], "device": "cpu", "num_classes": 28}, "loader": {"train_batch": 64, "test_batch": 10}, "opt": {"lr": 0.01}, "epochs": 1}
