@@ -45,10 +45,10 @@ class MLPModel(nn.Module):
         x = self.output_layer(x)
         return x
 
-mlp_configs = MLPConfigs.get_defaults()
-print(mlp_configs)
+# mlp_configs = MLPConfigs.get_defaults()
+# print(mlp_configs)
 
-mlp_configs.mlp_layers = [(30, 128), (128, 28)]
-ml  = MLPModel(configs= mlp_configs)
-print(ml)
+# mlp_configs.mlp_layers = [(30, 128), (128, 28)]
+# ml  = MLPModel(configs= mlp_configs)
+# print(ml)
 
