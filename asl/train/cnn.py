@@ -61,8 +61,8 @@ def compute_loss_accuracy(
 
         total_loss += loss.item()
 
-        total_loss /= len(loader.dataset)
-        accuracy /= len(loader.dataset)*100
+    total_loss =total_loss/ len(loader.dataset)
+    accuracy = accuracy/ len(loader.dataset)*100
 
     return total_loss, accuracy
 
@@ -129,7 +129,7 @@ def generate_report_for_cnn_model(
     configs: dict[str, Any],
 ):
     
-    reports_path = osp.join(root, "reports", "cnn")
+    reports_path = osp.join(root)
 
     if not osp.exists(reports_path): os.mkdir(reports_path)
 
