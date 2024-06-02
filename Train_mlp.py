@@ -13,6 +13,9 @@ import json
 import os
 
 
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
+
 
 if __name__ == "__main__":
 
@@ -30,7 +33,7 @@ if __name__ == "__main__":
     parser.add_argument('--lr', type= float, default= 0.01,
                         help="")
 
-    parser.add_argument('--epochs', type= int, default= 30,
+    parser.add_argument('--epochs', type= int, default= 40,
                         help="")
     
     parser.add_argument('--dataset', type= str, default= "data/mlp/dataset",
@@ -42,14 +45,14 @@ if __name__ == "__main__":
         root= osp.join(args.root, args.dataset)
     )
 
-    trainset, testset = random_split(dataset,  lengths=[0.87, 0.13])
+    trainset, testset = random_split(dataset,  lengths=[0.90, 0.10])
 
     train_loader = DataLoader(trainset, batch_size= args.train_batch, shuffle=True)
     test_loader = DataLoader(testset, batch_size= args.test_batch, shuffle=True)
 
     mlp_configs = models.MLPConfigs.get_defaults()
 
-    mlp_configs.mlp_layers = [(42, 128), (128, 28)]
+    mlp_configs.mlp_layers = [(42, 256), (256, 28)]
     # gcn_configs.fc_layers = [(64, 32), (32, 32)]
 
     model = models.MLPModel(configs= mlp_configs).to(mlp_configs.device)
